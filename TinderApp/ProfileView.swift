@@ -124,8 +124,6 @@ class ProfileView: UIView {
             buttonView.setImage(#imageLiteral(resourceName: "FilledHeart"), for: .selected)
             buttonView.setImage(#imageLiteral(resourceName: "SelectedHeart"), for: .highlighted)
             buttonView.setImage(#imageLiteral(resourceName: "SelectedHeart"), for: [.highlighted, .selected])
-            
-            print(self.center)
         }
         super.updateConstraints()
     }
