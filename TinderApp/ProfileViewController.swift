@@ -16,7 +16,10 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "TinderApp"
+        
         // Do any additional setup after loading the view, typically from a nib.
+        view.backgroundColor = UIColor.white
         divisor = view.frame.width / 2 / -0.61
         profileData = [Profile.init(name: "Alodia Babe", image: #imageLiteral(resourceName: "Alodia"), isWishlist: false)]
         setupProfile()
@@ -44,10 +47,9 @@ class ProfileViewController: UIViewController {
             
             profileViewData.append(profileView)
             self.view.addSubview(profileView)
-            
-            let leadingConstraint = NSLayoutConstraint(item: profileView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: self.view.frame.width * 0.05)
-            let topConstraint = NSLayoutConstraint(item: profileView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: self.view.frame.height * 0.05)
-            self.view.addConstraints([leadingConstraint, topConstraint])
+
+            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0" : profileView]))
+            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-80-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0" : profileView]))
         }
         
         for profileView in profileViewData {
@@ -87,7 +89,7 @@ class ProfileViewController: UIViewController {
             }
             
             UIView.animate(withDuration: 0.2) {
-                card.center = self.view.center
+                card.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 20)
                 card.transform = CGAffineTransform.identity
                 self.profileViewData[viewIndex].nopeView.alpha = 0.0
                 self.profileViewData[viewIndex].likeView.alpha = 0.0

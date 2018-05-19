@@ -103,20 +103,17 @@ class ProfileView: UIView {
             nopeView.widthAnchor.constraint(equalToConstant: screenSize.width * 0.4).isActive = true
             nopeView.heightAnchor.constraint(equalToConstant: screenSize.width * 0.3).isActive = true
             
-            imageView.widthAnchor.constraint(equalToConstant: screenSize.width * 0.9).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: screenSize.height * 0.7).isActive = true
-            imageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-            imageView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-            imageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-            imageView.bottomAnchor.constraint(equalTo: self.nameView.topAnchor).isActive = true
+            //MARK: imageView Constraints
+            addConstraintsWithFormat(format: "H:|[v0]|", views: imageView)
+            addConstraintsWithFormat(format: "V:|[v0]-0-[v1]|", views: imageView, nameView)
 
-            nameView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
-            nameView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-            nameView.rightAnchor.constraint(equalTo: self.buttonView.leftAnchor).isActive = true
+            //MARK: nameView Constraints
+            addConstraintsWithFormat(format: "H:|-10-[v0]-0-[v1]|", views: nameView, buttonView)
+            addConstraintsWithFormat(format: "V:[v0]|", views: nameView)
 
-            buttonView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-            buttonView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
-            buttonView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+            //MARK: buttonView Constraints
+            addConstraintsWithFormat(format: "H:[v0]|", views: buttonView)
+            addConstraintsWithFormat(format: "V:|[v0]-[v1]|", views: imageView, buttonView)
             buttonView.heightAnchor.constraint(equalToConstant: 80).isActive = true
             buttonView.widthAnchor.constraint(equalToConstant: 80).isActive = true
             buttonView.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -147,5 +144,18 @@ class ProfileView: UIView {
             likeView.transform = CGAffineTransform(rotationAngle: -0.61)
             likeView.alpha = abs(opacity)
         }
+    }
+}
+
+extension UIView {
+    func addConstraintsWithFormat(format: String, views: UIView...) {
+        var viewDictionary = [String: UIView]()
+        for (index, view) in views.enumerated() {
+            let key = "v\(index)"
+            view.translatesAutoresizingMaskIntoConstraints = false
+            viewDictionary[key] = view
+        }
+        
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewDictionary))
     }
 }
